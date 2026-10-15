@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import { THEME_LABEL, useUiStore } from '@shared/stores/useUiStore';
 import { useUserStore } from '@shared/stores/useUserStore';
 import { ConfirmModal } from '@shared/components/ConfirmModal';
+import { queryClient } from '@shared/api/queryClient';
 import { mainLinks, profileLink, type MenuLink } from './menuItems';
 import { CollapseIcon, ExitIcon, ExpandIcon, ThemeIcon } from './icons';
 import s from './MainMenu.module.less';
@@ -16,6 +17,7 @@ export function MainMenu() {
   const toggleMenu = useUiStore((st) => st.toggleMenu);
   const nextTheme = useUiStore((st) => st.nextTheme);
   const logout = useUserStore((st) => st.logout);
+  const user = useUserStore((st) => st.user);
 
   const onTheme = () => toast(`Тема: ${THEME_LABEL[nextTheme()]}`);
 
@@ -25,7 +27,9 @@ export function MainMenu() {
       okText: 'Выйти',
       danger: true,
     });
-    if (ok) logout();
+    if (!ok) return;
+    logout();
+    queryClient.clear(); // данные прошлого пользователя не должны пережить выход
   };
 
   // Подсказка нужна только в свёрнутом виде, когда подписи скрыты
@@ -86,7 +90,7 @@ export function MainMenu() {
       <span className={s.spacer} />
 
       <ul className={s.list}>
-        {renderLink(profileLink)}
+        {renderLink({ ...profileLink, label: user?.name || user?.email || profileLink.label })}
         <li>{renderAction('Тема: день / ночь / неон', ThemeIcon, onTheme)}</li>
       </ul>
       <span className={s.sep} />

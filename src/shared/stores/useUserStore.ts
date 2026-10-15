@@ -1,11 +1,12 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
+/** Пользователь Xano (auth/me). Набор полей зависит от таблицы user в Xano */
 export interface User {
   id: number;
-  name: string;
   email: string;
-  role: string;
+  name?: string;
+  created_at?: number;
 }
 
 interface UserState {
@@ -15,18 +16,10 @@ interface UserState {
   logout: () => void;
 }
 
-// Временный пользователь до подключения авторизации через Xano (auth/login)
-export const TEST_USER: User = {
-  id: 1,
-  name: 'Мытник Антон',
-  email: 'test@wraply.local',
-  role: 'МОП',
-};
-
 export const useUserStore = create<UserState>()(
   persist(
     (set) => ({
-      user: TEST_USER,
+      user: null,
       token: null,
       setSession: (user, token) => set({ user, token }),
       logout: () => set({ user: null, token: null }),
@@ -34,6 +27,11 @@ export const useUserStore = create<UserState>()(
     {
       name: 'wraply-user',
       storage: createJSONStorage(() => localStorage),
+      // v0 хранил тестового пользователя без токена — сбрасываем его
+      version: 1,
+      migrate: () => ({ user: null, token: null }),
     },
   ),
 );
+
+export const selectIsAuthed = (s: UserState) => Boolean(s.token && s.user);

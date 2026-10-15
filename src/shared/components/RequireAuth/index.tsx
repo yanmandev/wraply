@@ -1,8 +1,11 @@
-import { Navigate, Outlet } from 'react-router';
-import { useUserStore } from '@shared/stores/useUserStore';
+import { Navigate, Outlet, useLocation } from 'react-router';
+import { selectIsAuthed, useUserStore } from '@shared/stores/useUserStore';
 
 /** Пускает в дочерние маршруты только вошедшего пользователя */
 export function RequireAuth() {
-  const user = useUserStore((s) => s.user);
-  return user ? <Outlet /> : <Navigate to="/login" replace />;
+  const isAuthed = useUserStore(selectIsAuthed);
+  const location = useLocation();
+
+  // запоминаем, куда шёл пользователь, чтобы вернуть его туда после входа
+  return isAuthed ? <Outlet /> : <Navigate to="/login" replace state={{ from: location }} />;
 }

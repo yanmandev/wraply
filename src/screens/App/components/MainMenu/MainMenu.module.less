@@ -1,0 +1,153 @@
+.rail {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 120;
+  width: @rail-w;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 3px;
+  padding: 10px 8px;
+  background: @rail-bg;
+  overflow: hidden auto;
+  scrollbar-width: none;
+  transition: width 0.2s @ease;
+
+  .neon-theme({
+    background: @rail-bg-neon;
+    box-shadow: 1px 0 0 rgba(0, 229, 255, 0.25);
+  });
+}
+
+.expanded {
+  width: @rail-w-expanded;
+}
+
+.top {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-bottom: 6px;
+
+  .expanded & {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 40px;
+  padding: 0 6px;
+  border-radius: 11px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.logoMark {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 800;
+
+  .neon-theme({ color: #04121a; });
+}
+
+.toggle {
+  .expanded & {
+    flex: none;
+    width: 40px;
+
+    .label {
+      display: none;
+    }
+  }
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  height: 40px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 11px;
+  background: none;
+  color: @rail-ink;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    color 0.15s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.09);
+    color: #fff;
+  }
+
+  &.active {
+    background: var(--accent);
+    color: #fff;
+
+    .neon-theme({
+      color: #04121a;
+      box-shadow: 0 0 14px var(--accent-line);
+    });
+  }
+}
+
+.icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+}
+
+.label {
+  .ellipsis();
+  opacity: 0;
+  transition: opacity 0.15s;
+
+  .expanded & {
+    opacity: 1;
+    transition-delay: 0.05s;
+  }
+}
+
+.spacer {
+  flex: 1;
+  min-height: 12px;
+}
+
+.sep {
+  align-self: center;
+  width: 26px;
+  height: 1px;
+  margin: 6px 0;
+  background: rgba(255, 255, 255, 0.12);
+
+  .expanded & {
+    width: 100%;
+  }
+}

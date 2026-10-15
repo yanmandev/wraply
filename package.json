@@ -1,0 +1,54 @@
+{
+  "name": "wraply-crm",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "dev": "vite --mode loc",
+    "dev:dev": "vite --mode dev",
+    "build": "npm run build:dev",
+    "build:loc": "tsc -b && vite build --mode loc",
+    "build:dev": "tsc -b && vite build --mode dev",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "format": "prettier --write \"src/**/*.{ts,tsx,less,json}\""
+  },
+  "dependencies": {
+    "@ebay/nice-modal-react": "^1.2.13",
+    "@hookform/resolvers": "^5.9.1",
+    "@tanstack/react-query": "^5.104.3",
+    "antd": "^6.6.6",
+    "clsx": "^2.1.1",
+    "dayjs": "^1.11.23",
+    "ky": "^2.2.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-hook-form": "^7.90.0",
+    "react-number-format": "^5.4.5",
+    "react-router": "^8.4.0",
+    "sonner": "^2.0.8",
+    "zod": "^4.6.7",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@tanstack/react-query-devtools": "^5.104.3",
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "eslint": "^10.12.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
+    "globals": "^17.13.0",
+    "less": "^4.9.1",
+    "prettier": "^3.9.10",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.71.2",
+    "vite": "^8.3.4"
+  }
+}

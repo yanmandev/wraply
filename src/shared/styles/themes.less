@@ -1,0 +1,85 @@
+// Токены дизайна из прототипа docs/crm.html.
+// Темы переключаются атрибутом html[data-theme]: нет атрибута = день, night, neon.
+
+:root {
+  --bg: var(--chip-bg);
+  --surface: #fff;
+  --ink: #17212e;
+  --ink-2: #5a6b80;
+  --ink-3: #93a2b4;
+  --line: #e3e8ef;
+  --line-strong: #cbd5e1;
+  --accent: #2456e6;
+  --accent-hover: #1d49c7;
+  --accent-soft: #eaf0ff;
+  --accent-line: #c7d6ff;
+  --ok: #1e9e6a;
+  --ok-soft: #e6f6ef;
+  --warn: #b97a10;
+  --warn-soft: #fcf3e2;
+  --danger: #d64545;
+  --danger-soft: #fceded;
+  --sync: #7a5af8;
+  --shadow: 0 1px 2px rgba(23, 33, 46, 0.05), 0 4px 16px rgba(23, 33, 46, 0.06);
+
+  --bg-soft: #fafbfd;
+  --bg-soft-2: #f1f5f9;
+  --chip-bg: #edf1f6;
+  --head-bg: #f7f9fc;
+
+  --rail-w: @rail-w;
+  font-size: 13px;
+}
+
+html[data-theme='night'] {
+  --bg: #10161f;
+  --surface: #18202c;
+  --ink: #e7edf5;
+  --ink-2: #b9c4d4;
+  --ink-3: #7c8aa0;
+  --line: #26303f;
+  --line-strong: #35435a;
+  --accent: #5ca8ff;
+  --accent-hover: #4a96ee;
+  --accent-soft: rgba(92, 168, 255, 0.14);
+  --accent-line: rgba(92, 168, 255, 0.4);
+  --ok: #4ade80;
+  --ok-soft: rgba(74, 222, 128, 0.14);
+  --warn: #fbbf24;
+  --warn-soft: rgba(251, 191, 36, 0.14);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+
+  --bg-soft: #141b27;
+  --bg-soft-2: #1d2735;
+  --chip-bg: #233043;
+  --head-bg: #151d29;
+}
+
+html[data-theme='neon'] {
+  --bg: #0a0d16;
+  --surface: #111624;
+  --ink: #eaf6ff;
+  --ink-2: #9fb8d8;
+  --ink-3: #5e7292;
+  --line: #1e2a44;
+  --line-strong: #2e4066;
+  --accent: #00e5ff;
+  --accent-hover: #00c8e0;
+  --accent-soft: rgba(0, 229, 255, 0.12);
+  --accent-line: rgba(0, 229, 255, 0.45);
+  --ok: #39ff88;
+  --ok-soft: rgba(57, 255, 136, 0.12);
+  --warn: #ffd166;
+  --warn-soft: rgba(255, 209, 102, 0.12);
+  --shadow: 0 0 12px rgba(0, 229, 255, 0.12);
+
+  --bg-soft: #0e1322;
+  --bg-soft-2: #151c30;
+  --chip-bg: #1a2440;
+  --head-bg: #0f1526;
+}
+
+html[data-theme='night'],
+html[data-theme='neon'] {
+  color-scheme: dark;
+}

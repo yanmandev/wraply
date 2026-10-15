@@ -1,0 +1,26 @@
+node_modules
+dist
+dist-ssr
+*.local
+*.tsbuildinfo
+
+# env: локальные переопределения не коммитим
+.env.*.local
+.env.local
+
+# logs
+logs
+*.log
+npm-debug.log*
+
+# editor
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.sw?
+
+# Claude Code локальные настройки
+.claude/settings.local.json
+.claude/launch.json

@@ -1,0 +1,31 @@
+// Подключается автоматически в каждый .less (vite.config.ts → additionalData).
+// Здесь только переменные/миксины без CSS-вывода, иначе он задублируется в каждом модуле.
+
+@rail-w: 56px;
+@rail-w-expanded: 224px;
+@rail-bg: #1b222e;
+@rail-bg-neon: #0d1220;
+@rail-ink: #8ca0ba;
+
+@bp-md: 900px;
+
+@ease: cubic-bezier(0.2, 0, 0, 1);
+
+.ellipsis() {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dark-themes(@rules) {
+  :global(html[data-theme='night']) &,
+  :global(html[data-theme='neon']) & {
+    @rules();
+  }
+}
+
+.neon-theme(@rules) {
+  :global(html[data-theme='neon']) & {
+    @rules();
+  }
+}

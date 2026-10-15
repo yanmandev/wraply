@@ -1,0 +1,165 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 14px;
+  min-height: 58px;
+  padding: 8px 16px;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  white-space: nowrap;
+  color: var(--accent);
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--ink-3);
+  white-space: nowrap;
+
+  b {
+    color: var(--ink);
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  i {
+    width: 1px;
+    height: 14px;
+    background: var(--line);
+  }
+
+  svg {
+    flex: none;
+    color: var(--ink-3);
+  }
+}
+
+.stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: none;
+  overflow-x: auto;
+}
+
+.tab {
+  border: 0;
+  background: none;
+  color: var(--ink-2);
+  font-weight: 600;
+  font-size: 0.84rem;
+  padding: 7px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+
+  &:hover {
+    color: var(--ink);
+    background: var(--bg-soft);
+  }
+
+  &[aria-selected='true'] {
+    color: var(--accent);
+    background: var(--accent-soft);
+  }
+}
+
+.viewSwitch {
+  display: inline-flex;
+  flex: none;
+  gap: 2px;
+  margin: 0 6px;
+  padding: 3px;
+  border-radius: 10px;
+  background: var(--bg-soft-2);
+}
+
+.dim {
+  opacity: 0.55;
+}
+
+.vsBtn {
+  border: 0;
+  background: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: var(--ink-2);
+
+  &[aria-selected='true'] {
+    background: var(--surface);
+    color: var(--accent);
+    box-shadow: var(--shadow);
+  }
+}
+
+.note {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  padding: 4px 11px;
+  border: 1.5px solid #ebc77e;
+  border-radius: 999px;
+  background: var(--warn-soft);
+  color: var(--warn);
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+  animation: notePulse 1.8s ease-in-out infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+.noteOk {
+  color: var(--ok);
+  background: var(--ok-soft);
+  border-color: var(--ok);
+  animation: none;
+}
+
+@keyframes notePulse {
+  50% {
+    box-shadow: 0 0 0 5px rgba(185, 122, 16, 0.14);
+  }
+}
+
+.side {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  flex: none;
+}

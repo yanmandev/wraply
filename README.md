@@ -24,7 +24,7 @@ npm run lint
 | Файл | Назначение |
 |---|---|
 | `.env` | общие значения для всех сред |
-| `.env.loc` / `.env.dev` | значения конкретной среды (`--mode loc` / `--mode dev`) |
+| `.env.loc` / `.env.dev` | значения конкретной среды (`--mode loc` / `--mode dev`): хост Xano `VITE_API_HOST` и canonical групп API `VITE_API_GROUP_*` |
 | `.env.<mode>.local` | личные переопределения и секреты, в git не попадают |
 
 Переменные описаны в `.env.example`, типизированный доступ к ним — через `src/config/env.ts`.
@@ -43,7 +43,7 @@ src/
 │       ├── screens/     Home, Leads, Deals, Tasks, Chats, Disk, Kb, Profile, NotFound
 │       └── shared/      общее для экранов App (Placeholder)
 └── shared/
-    ├── api/           http (ky), queryClient, auth (Xano)
+    ├── api/           http (ky, клиенты по группам Xano: api.auth / deal / counterparty / contact), queryClient, auth
     ├── stores/        useUserStore, useUiStore (persist → localStorage)
     ├── components/    Money, ConfirmModal
     ├── lib/           date (dayjs)

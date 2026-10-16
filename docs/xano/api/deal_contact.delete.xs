@@ -1,7 +1,7 @@
 // DELETE /deal/{number}/contact/{contact_id} — отвязать контакт от сделки
 // (сам контакт у контрагента остаётся)
 query "deal/{number}/contact/{contact_id}" verb=DELETE {
-  api_group = "crm"
+  api_group = "Deal"
   auth = "user"
   input {
     text number filters=trim

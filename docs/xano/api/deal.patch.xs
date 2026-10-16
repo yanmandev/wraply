@@ -1,7 +1,7 @@
 // PATCH /deal/{number} — изменение полей сделки и статуса.
 // Передаются только изменённые поля (null = не менять).
 query "deal/{number}" verb=PATCH {
-  api_group = "crm"
+  api_group = "Deal"
   auth = "user"
   input {
     text number filters=trim

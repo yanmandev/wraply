@@ -1,6 +1,6 @@
 // GET /counterparty?search= — поиск по названию или ИНН (для выбора в сделку)
 query "counterparty" verb=GET {
-  api_group = "crm"
+  api_group = "Counterparty"
   auth = "user"
   input {
     text search?="" filters=trim

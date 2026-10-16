@@ -1,8 +1,19 @@
 export type AppEnv = 'loc' | 'dev';
 
+const e = import.meta.env;
+
 export const env = {
-  appName: import.meta.env.VITE_APP_NAME ?? 'Wraply CRM',
-  appEnv: (import.meta.env.VITE_APP_ENV ?? 'loc') as AppEnv,
-  apiUrl: import.meta.env.VITE_API_URL ?? '',
-  isProdBuild: import.meta.env.PROD,
+  appName: e.VITE_APP_NAME ?? 'Wraply CRM',
+  appEnv: (e.VITE_APP_ENV ?? 'loc') as AppEnv,
+  apiHost: e.VITE_API_HOST ?? '',
+  /** canonical групп API Xano: base URL группы = `${apiHost}/api:${canonical}` */
+  apiGroups: {
+    auth: e.VITE_API_GROUP_AUTH ?? '',
+    deal: e.VITE_API_GROUP_DEAL ?? '',
+    counterparty: e.VITE_API_GROUP_COUNTERPARTY ?? '',
+    contact: e.VITE_API_GROUP_CONTACT ?? '',
+  },
+  isProdBuild: e.PROD,
 } as const;
+
+export type ApiGroup = keyof typeof env.apiGroups;

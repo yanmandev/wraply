@@ -1,7 +1,7 @@
 // DELETE /deal/{number}/counterparty/{counterparty_id} — отвязать контрагента
 // вместе с его контактами по этой сделке
 query "deal/{number}/counterparty/{counterparty_id}" verb=DELETE {
-  api_group = "crm"
+  api_group = "Deal"
   auth = "user"
   input {
     text number filters=trim

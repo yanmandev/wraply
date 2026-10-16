@@ -1,6 +1,6 @@
 // GET /deal — реестр сделок с фильтрами, поиском и пагинацией
 query "deal" verb=GET {
-  api_group = "crm"
+  api_group = "Deal"
   auth = "user"
   input {
     text search?="" filters=trim

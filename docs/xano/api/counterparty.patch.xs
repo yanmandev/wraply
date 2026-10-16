@@ -1,7 +1,7 @@
 // PATCH /counterparty/{counterparty_id} — изменение реквизитов.
 // Фронт отправляет форму реквизитов целиком.
 query "counterparty/{counterparty_id}" verb=PATCH {
-  api_group = "crm"
+  api_group = "Counterparty"
   auth = "user"
   input {
     int counterparty_id {

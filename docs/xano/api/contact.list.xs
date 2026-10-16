@@ -1,6 +1,6 @@
-// GET /counterparty/{counterparty_id}/contact — контакты контрагента
-query "counterparty/{counterparty_id}/contact" verb=GET {
-  api_group = "crm"
+// GET /contact?counterparty_id= — контакты контрагента
+query "contact" verb=GET {
+  api_group = "Contact"
   auth = "user"
   input {
     int counterparty_id {

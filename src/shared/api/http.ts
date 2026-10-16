@@ -1,13 +1,10 @@
 import ky, { HTTPError } from 'ky';
 import { toast } from 'sonner';
-import { env } from '@/config/env';
+import { env, type ApiGroup } from '@/config/env';
 import { useUserStore } from '@shared/stores/useUserStore';
 
-/**
- * Базовый HTTP-клиент. Пути относительно VITE_API_URL: http.get('auth/me').
- */
-export const http = ky.create({
-  prefix: env.apiUrl,
+/** Общие настройки: таймаут, повторы, токен, реакция на 401 */
+const base = ky.create({
   timeout: 30_000,
   retry: { limit: 1, methods: ['get'] },
   hooks: {
@@ -27,6 +24,20 @@ export const http = ky.create({
     ],
   },
 });
+
+const groupClient = (group: ApiGroup) =>
+  base.extend({ prefix: `${env.apiHost}/api:${env.apiGroups[group]}` });
+
+/**
+ * Клиенты по группам API Xano — у каждой группы свой base URL.
+ * Пути относительно группы: api.deal.get('deal/10001КБ').
+ */
+export const api = {
+  auth: groupClient('auth'),
+  deal: groupClient('deal'),
+  counterparty: groupClient('counterparty'),
+  contact: groupClient('contact'),
+} as const satisfies Record<ApiGroup, unknown>;
 
 /** Человекочитаемый текст ошибки (Xano возвращает { message }) */
 export function getErrorMessage(error: unknown): string {

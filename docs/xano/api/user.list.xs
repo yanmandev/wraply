@@ -1,6 +1,6 @@
 // GET /user?role=mop — сотрудники для полей «МОП» / «МОС»
 query "user" verb=GET {
-  api_group = "crm"
+  api_group = "Authentication" // группа, где auth/login — подставьте её имя
   auth = "user"
   input {
     text? role? filters=trim|lower

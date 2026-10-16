@@ -1,6 +1,6 @@
-// DELETE /counterparty_contact/{contact_id} — удаление контакта вместе с его привязками к сделкам
-query "counterparty_contact/{contact_id}" verb=DELETE {
-  api_group = "crm"
+// DELETE /contact/{contact_id} — удаление контакта вместе с его привязками к сделкам
+query "contact/{contact_id}" verb=DELETE {
+  api_group = "Contact"
   auth = "user"
   input {
     int contact_id {

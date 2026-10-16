@@ -1,12 +1,15 @@
-// Во всех эндпоинтах ниже указана группа "crm".
+// Группы API в Xano. Deal и Counterparty уже созданы в кабинете, Contact нужно создать.
+// У каждой группы свой base URL: https://<host>/api:<canonical>.
+// Canonical группы виден в кабинете Xano; его нужно прописать в .env фронта
+// (VITE_API_GROUP_DEAL / _COUNTERPARTY / _CONTACT).
 //
-// Вариант 1 (рекомендую): положить эндпоинты в ту же группу, где auth/login
-// (её base URL уже прописан в .env: .../api:zHfTsXhY). Тогда замените
-// api_group = "crm" на имя этой группы во всех файлах api/*.xs.
+//   Authentication (существующая, auth/login, auth/me) — user.list.xs
+//   Deal          — deal.*.xs, deal_qualification.*, deal_counterparty.*, deal_contact.*
+//   Counterparty  — counterparty.*.xs
+//   Contact       — contact.*.xs
 //
-// Вариант 2: отдельная группа — у неё будет свой base URL, фронту понадобится
-// вторая переменная окружения.
-api_group "crm" {
-  canonical = "wraply-crm"
-  description = "CRM: сделки, контрагенты, контакты"
+// Если создаёте Contact через XanoScript:
+api_group "Contact" {
+  canonical = "wraply-contact"
+  description = "Контакты контрагентов"
 }

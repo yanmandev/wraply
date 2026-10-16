@@ -1,6 +1,6 @@
 // POST /counterparty — новый контрагент
 query "counterparty" verb=POST {
-  api_group = "crm"
+  api_group = "Counterparty"
   auth = "user"
   input {
     text type

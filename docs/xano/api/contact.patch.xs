@@ -1,6 +1,6 @@
-// PATCH /counterparty_contact/{contact_id} — изменение контакта
-query "counterparty_contact/{contact_id}" verb=PATCH {
-  api_group = "crm"
+// PATCH /contact/{contact_id} — изменение контакта
+query "contact/{contact_id}" verb=PATCH {
+  api_group = "Contact"
   auth = "user"
   input {
     int contact_id {

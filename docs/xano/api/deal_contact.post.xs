@@ -1,6 +1,6 @@
 // POST /deal/{number}/contact — привязать контакт к сделке
 query "deal/{number}/contact" verb=POST {
-  api_group = "crm"
+  api_group = "Deal"
   auth = "user"
   input {
     text number filters=trim

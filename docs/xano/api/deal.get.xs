@@ -1,6 +1,6 @@
 // GET /deal/{number} — карточка сделки
 query "deal/{number}" verb=GET {
-  api_group = "crm"
+  api_group = "Deal"
   auth = "user"
   input {
     text number filters=trim

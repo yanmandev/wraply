@@ -1,6 +1,6 @@
 // POST /deal/{number}/counterparty — привязать контрагента к сделке
 query "deal/{number}/counterparty" verb=POST {
-  api_group = "crm"
+  api_group = "Deal"
   auth = "user"
   input {
     text number filters=trim

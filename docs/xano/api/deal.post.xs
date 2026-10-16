@@ -1,8 +1,8 @@
 // POST /deal — создание сделки (последний шаг мастера).
-// Контрагенты и контакты создаются заранее (POST /counterparty, POST /counterparty_contact),
+// Контрагенты и контакты создаются заранее (POST /counterparty, POST /contact),
 // здесь передаются их id.
 query "deal" verb=POST {
-  api_group = "crm"
+  api_group = "Deal"
   auth = "user"
   input {
     text name filters=trim

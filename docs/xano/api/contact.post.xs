@@ -1,6 +1,6 @@
-// POST /counterparty_contact — новый контакт контрагента
-query "counterparty_contact" verb=POST {
-  api_group = "crm"
+// POST /contact — новый контакт контрагента
+query "contact" verb=POST {
+  api_group = "Contact"
   auth = "user"
   input {
     int counterparty_id {

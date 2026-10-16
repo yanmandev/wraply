@@ -177,7 +177,7 @@ user (role) ─< deal (mop_id, mos_id, created_by)
 | PATCH | /deal/{number}/qualification | Сохранение квалификации |
 | GET | /counterparty?search= | Поиск контрагентов по названию или ИНН |
 | POST / PATCH | /counterparty | Создание или изменение контрагента |
-| POST / PATCH / DELETE | /counterparty_contact | Контакты |
+| POST / PATCH / DELETE | /contact | Контакты контрагентов (группа Contact) |
 | POST / DELETE | /deal/{number}/counterparty | Привязка или отвязка контрагента (вместе с его контактами) |
-| GET | /counterparty/{id}/contact | Контакты контрагента для выбора в сделку |
+| GET | /contact?counterparty_id= | Контакты контрагента для выбора в сделку |
 | POST / PATCH / DELETE | /deal/{number}/contact | Привязка или отвязка контакта, смена основного |

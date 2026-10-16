@@ -1,7 +1,7 @@
 // PATCH /deal/{number}/qualification — сохранение квалификации.
 // Фронт отправляет форму целиком.
 query "deal/{number}/qualification" verb=PATCH {
-  api_group = "crm"
+  api_group = "Deal"
   auth = "user"
   input {
     text number filters=trim

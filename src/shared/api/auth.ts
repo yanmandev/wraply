@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import type { User } from '@shared/stores/useUserStore';
-import { http } from './http';
+import { api } from './http';
 
 export const loginSchema = z.object({
   email: z.string().trim().min(1, 'Введите email').pipe(z.email('Некорректный email')),
@@ -17,9 +17,9 @@ export interface LoginResponse {
 export const authApi = {
   /** POST /auth/login → { authToken, user_id } */
   login: (payload: LoginPayload) =>
-    http.post('auth/login', { json: payload }).json<LoginResponse>(),
+    api.auth.post('auth/login', { json: payload }).json<LoginResponse>(),
 
   /** GET /auth/me → текущий пользователь. Токен передаём явно: в store его ещё нет */
   me: (token: string) =>
-    http.get('auth/me', { headers: { Authorization: `Bearer ${token}` } }).json<User>(),
+    api.auth.get('auth/me', { headers: { Authorization: `Bearer ${token}` } }).json<User>(),
 };

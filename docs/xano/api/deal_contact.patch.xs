@@ -1,6 +1,6 @@
 // PATCH /deal/{number}/contact/{contact_id} — сделать контакт основным по сделке
 query "deal/{number}/contact/{contact_id}" verb=PATCH {
-  api_group = "crm"
+  api_group = "Deal"
   auth = "user"
   input {
     text number filters=trim

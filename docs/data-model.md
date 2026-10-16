@@ -2,6 +2,8 @@
 
 Таблицы для Xano. Типы полей указаны так, как они называются в Xano. Значения enum совпадают с константами в `src/shared/constants/*.ts`.
 
+Готовый XanoScript (таблицы, функции, эндпоинты) — в [xano/](xano/README.md).
+
 ```
 user (role) ─< deal (mop_id, mos_id, created_by)
                  ├── deal_qualification   (1 : 1, deal_id unique)

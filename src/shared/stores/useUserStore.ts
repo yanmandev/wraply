@@ -1,11 +1,14 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
+import type { UserRole } from '@shared/constants/user';
 
-/** Пользователь Xano (auth/me). Набор полей зависит от таблицы user в Xano */
+/** Пользователь Xano (auth/me) */
 export interface User {
   id: number;
   email: string;
   name?: string;
+  /** может отсутствовать, пока поле не добавлено в Xano */
+  role?: UserRole;
   created_at?: number;
 }
 

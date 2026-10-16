@@ -3,10 +3,13 @@
 Таблицы для Xano. Типы полей указаны так, как они называются в Xano. Значения enum совпадают с константами в `src/shared/constants/*.ts`.
 
 ```
-user (role) ─┬─< deal (mop_id, mos_id, created_by)
-      │     ├── deal_qualification   (1 : 1, deal_id unique)
-      │     └─< deal_counterparty >── counterparty ──< counterparty_contact
+user (role) ─< deal (mop_id, mos_id, created_by)
+                 ├── deal_qualification   (1 : 1, deal_id unique)
+                 ├─< deal_counterparty >── counterparty ──< counterparty_contact
+                 └─< deal_contact >──────────────────────────┘
 ```
+
+Контакт принадлежит контрагенту (`counterparty_contact`). К сделке контакты привязываются отдельно через `deal_contact`: у компании может быть десять контактов, а по конкретной сделке работают двое.
 
 ## user — добавить поле
 
@@ -138,10 +141,24 @@ user (role) ─┬─< deal (mop_id, mos_id, created_by)
 | note | text | Примечание или роль («водитель», «логист») |
 | created_at | timestamp (default now) | |
 
+## deal_contact — контакты сделки (многие ко многим)
+
+| Поле | Тип Xano | Описание |
+|---|---|---|
+| id | integer (auto) | |
+| deal_id | table reference → deal | |
+| contact_id | table reference → counterparty_contact | |
+| is_primary | bool (default false) | Основное контактное лицо по сделке |
+| created_at | timestamp (default now) | |
+
+Уникальный составной индекс: `deal_id + contact_id`.
+
+Привязать к сделке можно только контакт контрагента, который сам привязан к этой сделке. Это проверяется в эндпоинте (precondition). Если контрагента отвязывают от сделки, его контакты отвязываются вместе с ним.
+
 ## Пошаговая форма создания сделки
 
 1. **Основное:** название, тип клиента, МОП (по умолчанию текущий пользователь), МОС.
-2. **Клиент:** поиск контрагента по названию или ИНН среди существующих либо создание нового с реквизитами по типу. Можно добавить несколько контрагентов и отметить основного. Здесь же контакты.
+2. **Клиент:** поиск контрагента по названию или ИНН среди существующих либо создание нового с реквизитами по типу. Можно добавить несколько контрагентов и отметить основного. Здесь же контакты по сделке: выбираются из контактов добавленных контрагентов или создаются новые. Контактов может быть несколько, один отмечается основным.
 3. **Квалификация:** 11 вопросов. Шаг можно пропустить и заполнить позже в карточке сделки.
 
 Сделка создаётся в Xano одним запросом `POST /deal` после последнего шага: это проще, чем держать черновики. В ответе приходит `number`, и фронт переходит на `/deals/:number`.
@@ -152,11 +169,13 @@ user (role) ─┬─< deal (mop_id, mos_id, created_by)
 |---|---|---|
 | GET | /user?role= | Сотрудники для полей МОП и МОС: id, name, role |
 | GET | /deal | Реестр сделок: фильтры status, mop_id, поиск; пагинация |
-| GET | /deal/{number} | Сделка вместе с qualification, counterparties[] (с contacts[]), mop, mos |
-| POST | /deal | Создание: deal, qualification, counterparties; генерирует number |
+| GET | /deal/{number} | Сделка вместе с qualification, counterparties[], contacts[] (контакты сделки с флагом is_primary), mop, mos |
+| POST | /deal | Создание: deal, qualification, counterparties, contacts; генерирует number |
 | PATCH | /deal/{number} | Изменение полей сделки и статуса |
 | PATCH | /deal/{number}/qualification | Сохранение квалификации |
 | GET | /counterparty?search= | Поиск контрагентов по названию или ИНН |
 | POST / PATCH | /counterparty | Создание или изменение контрагента |
 | POST / PATCH / DELETE | /counterparty_contact | Контакты |
-| POST / DELETE | /deal/{number}/counterparty | Привязка или отвязка контрагента |
+| POST / DELETE | /deal/{number}/counterparty | Привязка или отвязка контрагента (вместе с его контактами) |
+| GET | /counterparty/{id}/contact | Контакты контрагента для выбора в сделку |
+| POST / PATCH / DELETE | /deal/{number}/contact | Привязка или отвязка контакта, смена основного |

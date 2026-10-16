@@ -71,6 +71,15 @@ export interface DealCounterparty {
   created_at: Timestamp;
 }
 
+/** Связь сделки с контактом контрагента (многие ко многим) */
+export interface DealContact {
+  id: number;
+  deal_id: number;
+  contact_id: number;
+  is_primary: boolean;
+  created_at: Timestamp;
+}
+
 export interface CounterpartyContact {
   id: number;
   counterparty_id: number;

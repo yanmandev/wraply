@@ -1,0 +1,77 @@
+.back {
+  color: var(--ink-2);
+  font-weight: 600;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--accent);
+  }
+}
+
+.body {
+  max-width: 980px;
+}
+
+.steps {
+  padding: 4px 4px 0;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 20px 22px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 16px;
+
+  @media (max-width: @bp-md) {
+    grid-template-columns: 1fr;
+
+    > div:empty {
+      display: none;
+    }
+  }
+}
+
+.wide {
+  grid-column: 1 / -1;
+}
+
+.full {
+  width: 100%;
+}
+
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  color: var(--ink-2);
+  font-weight: 700;
+  white-space: nowrap;
+
+  > :first-child {
+    flex: 1;
+    margin: 0;
+  }
+}
+
+.footer {
+  display: flex;
+  gap: 8px;
+  padding-top: 14px;
+  margin-top: 6px;
+  border-top: 1px solid var(--line);
+}
+
+.spacer {
+  flex: 1;
+}

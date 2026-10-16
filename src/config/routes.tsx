@@ -20,7 +20,14 @@ export const router = createBrowserRouter([
         children: [
           { index: true, lazy: screen(() => import('@app/screens/Home')) },
           { path: 'leads', lazy: screen(() => import('@app/screens/Leads')) },
-          { path: 'deals', lazy: screen(() => import('@app/screens/Deals')) },
+          {
+            path: 'deals',
+            children: [
+              { index: true, lazy: screen(() => import('@app/screens/Deals')) },
+              { path: 'new', lazy: screen(() => import('@app/screens/Deals/screens/New')) },
+              { path: ':number', lazy: screen(() => import('@app/screens/Deals/screens/Deal')) },
+            ],
+          },
           { path: 'tasks', lazy: screen(() => import('@app/screens/Tasks')) },
           { path: 'chats', lazy: screen(() => import('@app/screens/Chats')) },
           { path: 'disk', lazy: screen(() => import('@app/screens/Disk')) },

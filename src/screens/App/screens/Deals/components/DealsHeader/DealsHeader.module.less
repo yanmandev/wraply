@@ -1,0 +1,97 @@
+.views {
+  flex: none;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.search {
+  width: 280px;
+
+  @media (max-width: @bp-md) {
+    width: 180px;
+  }
+}
+
+.filterBtn {
+  width: 32px;
+  height: 32px;
+  flex: none;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink-2);
+  font-size: 1rem;
+
+  &:hover {
+    border-color: var(--accent-line);
+    color: var(--accent);
+  }
+}
+
+.filterBtnOn {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* ── поповер фильтра ── */
+
+.filter {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.preset {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 3px 10px;
+  background: var(--surface);
+  color: var(--ink-2);
+  font-size: 0.86rem;
+  font-weight: 600;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.presetOn {
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+
+  b {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+}
+
+.filterFoot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}

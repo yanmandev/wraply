@@ -1,0 +1,34 @@
+.table {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: var(--surface);
+
+  :global(.ant-table-thead > tr > th) {
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    background: var(--bg-soft);
+  }
+
+  :global(.ant-table-tbody > tr) {
+    cursor: pointer;
+  }
+
+  :global(.ant-table-pagination) {
+    padding: 0 16px;
+  }
+}
+
+.number {
+  font-weight: 700;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.muted {
+  color: var(--ink-3);
+}

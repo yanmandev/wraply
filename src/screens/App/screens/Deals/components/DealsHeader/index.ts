@@ -1,0 +1,1 @@
+export { DealsHeader } from './DealsHeader';

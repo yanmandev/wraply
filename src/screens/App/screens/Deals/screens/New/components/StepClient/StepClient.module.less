@@ -1,0 +1,130 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.picker {
+  display: flex;
+  gap: 8px;
+}
+
+.search {
+  flex: 1;
+  min-width: 0;
+}
+
+.option {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+
+  small {
+    color: var(--ink-3);
+  }
+}
+
+.empty {
+  padding: 24px 0;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-soft);
+}
+
+.cardPrimary {
+  border-color: var(--accent-line);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+
+.cardHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.cardTitle {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  b {
+    .ellipsis();
+    font-size: 1rem;
+  }
+
+  span {
+    color: var(--ink-2);
+    font-size: 0.86rem;
+  }
+}
+
+.contacts {
+  padding: 10px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contactsHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  b {
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+}
+
+.contactList {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 8px;
+}
+
+.contact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 40px;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.contactOn {
+  border-color: var(--accent-line);
+}
+
+.contactName {
+  font-weight: 600;
+}
+
+.contactMeta {
+  margin-left: 8px;
+  color: var(--ink-2);
+  font-size: 0.86rem;
+}
+
+.muted {
+  color: var(--ink-3);
+}

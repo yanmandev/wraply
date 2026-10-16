@@ -30,7 +30,7 @@ const groupClient = (group: ApiGroup) =>
 
 /**
  * Клиенты по группам API Xano — у каждой группы свой base URL.
- * Пути относительно группы: api.deal.get('deal/10001КБ').
+ * Пути относительно группы: api.deal.get('deal/10001KB').
  */
 export const api = {
   auth: groupClient('auth'),

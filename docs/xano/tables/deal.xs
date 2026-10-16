@@ -3,7 +3,7 @@ table "deal" {
   schema {
     int id
 
-    // Красивый номер 10001КБ. При вставке временный, сразу после — из id (см. api/deal.post.xs)
+    // Красивый номер 10001KB (цифры + 2 латинские буквы). При вставке временный, сразу после — из id (см. api/deal.post.xs)
     text number filters=trim
 
     text name filters=trim

@@ -10,7 +10,7 @@ export const COUNTERPARTY_TYPE_LABEL: LabelMap<CounterpartyType> = {
 };
 export const counterpartyTypeOptions = toOptions(COUNTERPARTY_TYPE_LABEL);
 
-type RequisiteField =
+export type RequisiteField =
   | 'inn'
   | 'kpp'
   | 'ogrn'
@@ -69,3 +69,24 @@ export const REQUISITE_LENGTH = {
   ip: { inn: 12, ogrn: 15 },
   individual: { inn: 12 },
 } as const;
+
+export const REQUISITE_LABEL: Record<RequisiteField, string> = {
+  inn: 'ИНН',
+  kpp: 'КПП',
+  ogrn: 'ОГРН',
+  short_name: 'Сокращённое наименование',
+  full_name: 'Полное наименование',
+  registered_at: 'Дата гос. регистрации',
+  okpo: 'ОКПО',
+  oktmo: 'ОКТМО',
+  director: 'Ген. директор',
+  accountant: 'Гл. бухгалтер',
+  address: 'Адрес',
+};
+
+/** Подписи, которые зависят от типа (у ИП — ОГРНИП и ФИО) */
+export const requisiteLabel = (type: CounterpartyType, field: RequisiteField): string => {
+  if (field === 'ogrn' && type === 'ip') return 'ОГРНИП';
+  if (field === 'full_name' && type !== 'organization') return 'ФИО';
+  return REQUISITE_LABEL[field];
+};

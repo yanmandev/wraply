@@ -15,7 +15,7 @@ type DateString = string;
 
 export interface Deal {
   id: number;
-  /** «Красивый» номер, например 57299АА — используется в URL /deals/:number */
+  /** «Красивый» номер, например 10001KB — используется в URL /deals/:number */
   number: string;
   name: string;
   status: DealStatus;
@@ -31,16 +31,16 @@ export interface DealQualification {
   id: number;
   deal_id: number;
   vehicle_count: number | null;
-  operating_conditions: string;
+  operating_conditions: string | null;
   install_place: InstallPlace | null;
   old_film: OldFilm | null;
   measurement: Measurement | null;
-  vehicles: string;
-  goal: string;
-  deadline: string;
+  vehicles: string | null;
+  goal: string | null;
+  deadline: string | null;
   priority: Priority | null;
   design: DesignSource | null;
-  invoice_requirements: string;
+  invoice_requirements: string | null;
   created_at: Timestamp;
   updated_at: Timestamp | null;
 }
@@ -48,17 +48,17 @@ export interface DealQualification {
 export interface Counterparty {
   id: number;
   type: CounterpartyType;
-  inn: string;
-  kpp: string;
-  ogrn: string;
-  short_name: string;
+  inn: string | null;
+  kpp: string | null;
+  ogrn: string | null;
+  short_name: string | null;
   full_name: string;
   registered_at: DateString | null;
-  okpo: string;
-  oktmo: string;
-  director: string;
-  accountant: string;
-  address: string;
+  okpo: string | null;
+  oktmo: string | null;
+  director: string | null;
+  accountant: string | null;
+  address: string | null;
   created_at: Timestamp;
   updated_at: Timestamp | null;
 }
@@ -84,7 +84,32 @@ export interface CounterpartyContact {
   id: number;
   counterparty_id: number;
   name: string;
-  phone: string;
-  note: string;
+  phone: string | null;
+  note: string | null;
   created_at: Timestamp;
+}
+
+/* ═══ Ответы API ═══ */
+
+export interface UserBrief {
+  id: number;
+  name: string;
+  email: string;
+  role?: string;
+}
+
+/** Строка реестра сделок (GET /deal) */
+export interface DealListItem extends Deal {
+  mop_name: string | null;
+  client_name: string | null;
+  client_full_name: string | null;
+}
+
+/** Карточка сделки (GET /deal/{number}) */
+export interface DealCard extends Deal {
+  qualification: DealQualification | null;
+  counterparties: (Counterparty & { is_primary: boolean })[];
+  contacts: (CounterpartyContact & { is_primary: boolean })[];
+  mop: UserBrief | null;
+  mos: UserBrief | null;
 }

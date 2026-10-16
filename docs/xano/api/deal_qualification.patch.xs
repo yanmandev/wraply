@@ -31,20 +31,28 @@ query "deal/{number}/qualification" verb=PATCH {
       return = { type: "single" }
     } as $existing
 
+    // Пустая запись при первом сохранении, дальше — всегда patch
     conditional {
       if ($existing == null) {
         db.add "deal_qualification" {
-          data = $input.qualification|set:"deal_id":$deal.id|set:"created_at":now
-        } as $qualification
-      }
-      else {
-        db.patch "deal_qualification" {
-          field_name = "id"
-          field_value = $existing.id
-          data = $input.qualification|set:"updated_at":now
-        } as $qualification
+          data = {
+            deal_id: $deal.id,
+            created_at: now
+          }
+        } as $existing
       }
     }
+
+    // В data передаём переменную, а не выражение с фильтрами
+    var $updates {
+      value = $input.qualification|set:"updated_at":now
+    }
+
+    db.patch "deal_qualification" {
+      field_name = "id"
+      field_value = $existing.id
+      data = $updates
+    } as $qualification
   }
   response = $qualification
 }

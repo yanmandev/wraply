@@ -90,8 +90,25 @@ query "deal" verb=POST {
           }
         } as $deal
 
+        // db.add принимает в data только литерал объекта — перечисляем поля явно
+        var $q { value = $input.qualification ?? {} }
+
         db.add "deal_qualification" {
-          data = ($input.qualification ?? {})|set:"deal_id":$deal.id|set:"created_at":now
+          data = {
+            deal_id: $deal.id,
+            vehicle_count: $q.vehicle_count,
+            operating_conditions: $q.operating_conditions,
+            install_place: $q.install_place,
+            old_film: $q.old_film,
+            measurement: $q.measurement,
+            vehicles: $q.vehicles,
+            goal: $q.goal,
+            deadline: $q.deadline,
+            priority: $q.priority,
+            design: $q.design,
+            invoice_requirements: $q.invoice_requirements,
+            created_at: now
+          }
         }
 
         foreach ($cp_ids) {

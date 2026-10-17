@@ -102,6 +102,33 @@ export const dealApi = {
     api.deal.delete(`${dealPath(number)}/contact/${contactId}`).json<DealCard>(),
 };
 
+/** GET /deal_stats — сырьё для сводки над реестром (раскладку делает фронт) */
+export interface DealStatsResponse {
+  by_status: Partial<Record<DealStatus, number>>;
+  /** created_at сделок, созданных начиная с since */
+  created: number[];
+  /** дата завершения (updated_at) сделок в статусе completed, начиная с since */
+  completed: number[];
+}
+
+export interface DealStatsParams {
+  mop_id?: number;
+  since: number;
+}
+
+export const dealStatsApi = {
+  get: (params: DealStatsParams) =>
+    api.deal.get('deal_stats', { searchParams: toSearchParams(params) }).json<DealStatsResponse>(),
+};
+
+export const useDealStats = (params: DealStatsParams) =>
+  useQuery({
+    queryKey: ['deal', 'stats', params],
+    queryFn: () => dealStatsApi.get(params),
+    placeholderData: keepPreviousData, // при смене фильтра держим прежнюю картинку
+    staleTime: 60_000,
+  });
+
 export const useDeals = (params: DealListParams) =>
   useQuery({
     queryKey: dealKeys.list(params),

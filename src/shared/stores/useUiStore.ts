@@ -13,8 +13,11 @@ export const THEME_LABEL: Record<Theme, string> = {
 interface UiState {
   theme: Theme;
   menuExpanded: boolean;
+  /** блок «Сводка» над реестром сделок развёрнут */
+  dealsStatsOpen: boolean;
   nextTheme: () => Theme;
   toggleMenu: () => void;
+  toggleDealsStats: () => void;
 }
 
 export const useUiStore = create<UiState>()(
@@ -22,18 +25,24 @@ export const useUiStore = create<UiState>()(
     (set, get) => ({
       theme: 'light',
       menuExpanded: false,
+      dealsStatsOpen: true,
       nextTheme: () => {
         const theme = THEMES[(THEMES.indexOf(get().theme) + 1) % THEMES.length];
         set({ theme });
         return theme;
       },
       toggleMenu: () => set((s) => ({ menuExpanded: !s.menuExpanded })),
+      toggleDealsStats: () => set((s) => ({ dealsStatsOpen: !s.dealsStatsOpen })),
     }),
     {
       // ключ читается также в index.html для применения темы до загрузки React
       name: 'wraply-ui',
       storage: createJSONStorage(() => localStorage),
-      partialize: ({ theme, menuExpanded }) => ({ theme, menuExpanded }),
+      partialize: ({ theme, menuExpanded, dealsStatsOpen }) => ({
+        theme,
+        menuExpanded,
+        dealsStatsOpen,
+      }),
     },
   ),
 );

@@ -86,6 +86,7 @@ export function DealsTable({ params, onPageChange }: Props) {
       columns={columns}
       dataSource={data?.items}
       loading={isLoading || isFetching}
+      scroll={{ x: 900 }}
       locale={{ emptyText: 'Сделок не найдено' }}
       onRow={(d) => ({
         onClick: () => navigate(`/deals/${encodeURIComponent(d.number)}`),

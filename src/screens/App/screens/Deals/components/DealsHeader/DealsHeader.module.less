@@ -4,16 +4,24 @@
 
 .right {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
   margin-left: auto;
+
+  // узкий экран: поиск растягивается на всю строку, кнопки переносятся
+  @media (max-width: @bp-md) {
+    flex: 1 1 100%;
+    margin-left: 0;
+  }
 }
 
 .search {
   width: 280px;
 
   @media (max-width: @bp-md) {
-    width: 180px;
+    flex: 1 1 160px;
+    width: auto;
   }
 }
 

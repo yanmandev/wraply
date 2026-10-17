@@ -21,6 +21,7 @@
 | User | user.patch.xs | PATCH /user/{user_id} |
 | User | user.delete.xs | DELETE /user/{user_id} |
 | Deal | deal.list.xs | GET /deal?search=&status=&mop_id=&page=&per_page= |
+| Deal | deal.stats.xs | GET /deal_stats?mop_id=&since= (сводка над реестром) |
 | Deal | deal.get.xs | GET /deal/{number} |
 | Deal | deal.post.xs | POST /deal |
 | Deal | deal.patch.xs | PATCH /deal/{number} |

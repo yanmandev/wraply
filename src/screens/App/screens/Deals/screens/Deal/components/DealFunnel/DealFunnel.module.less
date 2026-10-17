@@ -1,0 +1,80 @@
+// Стрелки этапов — как .funnel / .fstep в прототипе
+@arrow: 11px;
+
+.funnel {
+  display: flex;
+  gap: 3px;
+  padding: 2px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.step {
+  flex: 1;
+  min-width: 120px;
+  padding: 10px 12px 10px 19px;
+  border: 0;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  clip-path: polygon(
+    0 0,
+    calc(100% - @arrow) 0,
+    100% 50%,
+    calc(100% - @arrow) 100%,
+    0 100%,
+    @arrow 50%
+  );
+  transition: filter 0.15s;
+
+  &:first-child {
+    padding-left: 12px;
+    clip-path: polygon(0 0, calc(100% - @arrow) 0, 100% 50%, calc(100% - @arrow) 100%, 0 100%);
+  }
+
+  &:hover:not(:disabled) {
+    filter: brightness(1.08);
+  }
+
+  &:disabled {
+    cursor: progress;
+  }
+
+  .neon-theme({ color: #04121a; });
+}
+
+/* текущий этап */
+.now {
+  background: color-mix(in srgb, var(--accent) 78%, #000);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.35);
+
+  .neon-theme({ color: #fff; });
+}
+
+/* этапы впереди */
+.future {
+  background: var(--bg-soft-2);
+  color: var(--ink-2);
+
+  .neon-theme({ color: var(--ink-2); });
+}
+
+/* «Завершить сделку» */
+.finish {
+  background: var(--line-strong);
+  color: var(--ink-2);
+
+  .neon-theme({ color: var(--ink-2); });
+}
+
+.done {
+  background: var(--ok);
+  color: #fff;
+
+  .neon-theme({ color: #04121a; });
+}

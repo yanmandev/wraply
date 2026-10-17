@@ -8,19 +8,197 @@
   }
 }
 
-.name {
-  color: var(--ink-2);
-  font-weight: 600;
+/* ── заголовок «10001KB · Название» ── */
+
+.title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
 }
 
+.number {
+  color: var(--accent);
+}
+
+.dot {
+  color: var(--ink-3);
+}
+
+.titleName {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: min(420px, 60vw);
+  margin: -2px -6px;
+  padding: 2px 6px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  text-align: left;
+  cursor: text;
+  .ellipsis();
+
+  &:hover {
+    background: var(--accent-soft);
+  }
+
+  &:hover .editIcon {
+    opacity: 1;
+  }
+}
+
+.editIcon {
+  color: var(--ink-3);
+  font-size: 0.9rem;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.titleInput {
+  width: min(340px, 60vw);
+  font-weight: 700;
+}
+
+/* ── карточки блоков (как .card в прототипе) ── */
+
 .card {
-  padding: 18px 20px;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 14px;
   box-shadow: var(--shadow);
+  overflow: hidden;
 }
 
-.todo {
-  margin-top: 24px;
+.cardHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 16px;
+  background: var(--bg-soft);
+  border-bottom: 1px solid var(--line);
+
+  h2 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+}
+
+.sub {
+  color: var(--ink-3);
+  font-size: 0.86rem;
+  font-weight: 500;
+}
+
+.cardBody {
+  padding: 14px 16px;
+}
+
+/* сворачиваемая карточка */
+
+.collapsible {
+  > .cardHead {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  &:not(.open) > .cardHead {
+    border-bottom: 0;
+  }
+}
+
+.chev {
+  flex: none;
+  color: var(--ink-3);
+  transition: transform 0.18s;
+
+  .open & {
+    transform: rotate(180deg);
+  }
+}
+
+/* шапка квалификации: три колонки — название | ответственные | прогресс.
+   1fr auto 1fr держит середину ровно по центру карточки при любой длине краёв */
+
+.qHead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  column-gap: 16px;
+
+  // узкий экран: название и прогресс в первой строке, ответственные — второй строкой.
+  // flex, а не grid: строка на всю ширину в сетке раздувает auto-колонку и съедает название
+  @media (max-width: @bp-md) {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 6px;
+
+    .qTitle {
+      order: 1;
+      flex: 1 1 auto;
+
+      .sub {
+        display: none; // не хватает места — подпись «заполняет МОП» прячем
+      }
+    }
+
+    .qProgress {
+      order: 2;
+      margin-left: auto; // если не влез рядом с названием — всё равно у правого края
+    }
+
+    .managers {
+      order: 3;
+      flex: 1 1 100%;
+      text-align: left;
+      white-space: normal;
+    }
+  }
+}
+
+.qTitle {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
+  justify-self: start;
+}
+
+.managers {
+  min-width: 0;
+  max-width: 100%;
+  text-align: center;
+  color: var(--ink-2);
+  font-size: 0.9rem;
+  font-weight: 600;
+  .ellipsis();
+}
+
+.qProgress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-self: end;
+  color: var(--ink-2);
+  font-size: 0.9rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.qBar {
+  width: min(240px, 18vw);
+  min-width: 60px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--bg-soft-2);
+  overflow: hidden;
+
+  i {
+    display: block;
+    height: 100%;
+    background: var(--ok);
+    transition: width 0.25s;
+  }
 }

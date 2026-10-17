@@ -17,6 +17,10 @@ export const counterpartyApi = {
 
   create: (payload: CounterpartyPayload) =>
     api.counterparty.post('counterparty', { json: payload }).json<Counterparty>(),
+
+  /** Полное обновление реквизитов (форма отправляет всё) */
+  update: (id: number, payload: CounterpartyPayload) =>
+    api.counterparty.patch(`counterparty/${id}`, { json: payload }).json<Counterparty>(),
 };
 
 /** Поиск для автокомплита; пустая строка — первые записи по алфавиту */

@@ -1,12 +1,12 @@
-// PATCH /deal/{number} — изменение полей сделки и статуса.
-// Передаются только изменённые поля (null = не менять).
+// PATCH /deal/{number} — сохранение основных полей сделки (форма редактирования).
+// name, client_type, mop_id, mos_id записываются как пришли — null очищает поле.
+// status необязателен: не передан (null) — остаётся прежним.
 query "deal/{number}" verb=PATCH {
   api_group = "Deal"
   auth = "user"
   input {
     text number filters=trim
-    text? name? filters=trim
-    text? status?
+    text name filters=trim
     text? client_type?
     int? mop_id? {
       table = "user"
@@ -14,20 +14,29 @@ query "deal/{number}" verb=PATCH {
     int? mos_id? {
       table = "user"
     }
+    text? status?
   }
   stack {
     function.run "deal_by_number" {
       input = { number: $input.number }
     } as $deal
 
-    var $updates {
-      value = ({ updated_at: now })|set_ifnotnull:"name":$input.name|set_ifnotnull:"status":$input.status|set_ifnotnull:"client_type":$input.client_type|set_ifnotnull:"mop_id":$input.mop_id|set_ifnotnull:"mos_id":$input.mos_id
+    precondition (($input.name|strlen) > 0) {
+      error_type = "inputerror"
+      error = "Укажите название сделки"
     }
 
-    db.patch "deal" {
+    db.edit "deal" {
       field_name = "id"
       field_value = $deal.id
-      data = $updates
+      data = {
+        name: $input.name,
+        client_type: $input.client_type,
+        mop_id: $input.mop_id,
+        mos_id: $input.mos_id,
+        status: $input.status ?? $deal.status,
+        updated_at: now
+      }
     }
 
     function.run "deal_card" {

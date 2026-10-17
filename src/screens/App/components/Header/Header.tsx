@@ -17,6 +17,8 @@ export interface HeaderTab {
   label: string;
   /** Вкладки внутри переключателя (Смета/Заказ · КП) */
   group?: string;
+  /** Показывается, но недоступна (раздел ещё не готов) */
+  disabled?: boolean;
 }
 
 export interface HeaderNote {
@@ -43,6 +45,8 @@ export function Header({ title, stats, tabs, activeTab, onTabChange, note, actio
       role="tab"
       className={cls}
       aria-selected={t.key === activeTab}
+      disabled={t.disabled}
+      title={t.disabled ? 'Раздел в разработке' : undefined}
       onClick={() => onTabChange?.(t.key)}
     >
       {t.label}

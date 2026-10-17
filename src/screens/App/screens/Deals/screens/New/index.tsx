@@ -8,24 +8,33 @@ import { toast } from 'sonner';
 import { dealApi, dealKeys } from '@shared/api/deal';
 import { useUserStore } from '@shared/stores/useUserStore';
 import { PageBody, PageHeader, PageTitle } from '@app/shared/components/Page';
-import { StepMain } from './components/StepMain';
-import { StepClient } from './components/StepClient';
-import { StepQualification } from './components/StepQualification';
+import { ClientEditor } from '../../shared/components/ClientEditor';
 import {
-  dealFormSchema,
-  getDefaultValues,
-  STEP_FIELDS,
+  createDealFormSchema,
+  emptyDealForm,
   toCreatePayload,
   type DealFormValues,
-} from './schema';
+} from '../../shared/dealForm';
+import { StepMain } from './components/StepMain';
+import { StepQualification } from './components/StepQualification';
 import s from './NewDeal.module.less';
+
+// В мастере реквизиты контрагентов не редактируются — проверять их незачем
+const dealFormSchema = createDealFormSchema({ strictRequisites: false });
 
 const STEPS = [
   { title: 'Основное', content: 'Название и ответственные', Component: StepMain },
-  { title: 'Клиент', content: 'Контрагенты и контакты', Component: StepClient },
+  { title: 'Клиент', content: 'Контрагенты и контакты', Component: ClientEditor },
   { title: 'Квалификация', content: 'Можно заполнить позже', Component: StepQualification },
 ];
 const LAST = STEPS.length - 1;
+
+/** Поля каждого шага — для проверки перед переходом дальше */
+const STEP_FIELDS = [
+  ['name', 'client_type', 'mop_id', 'mos_id'],
+  ['counterparties', 'primary_counterparty_id', 'contacts', 'primary_contact_id'],
+  ['qualification'],
+] as const satisfies readonly (readonly (keyof DealFormValues)[])[];
 
 /** Мастер создания сделки: 3 шага, одна форма, один запрос POST /deal в конце */
 export default function NewDeal() {
@@ -37,7 +46,7 @@ export default function NewDeal() {
   const form = useForm<DealFormValues>({
     resolver: zodResolver(dealFormSchema),
     // МОП по умолчанию — текущий пользователь, если он МОП
-    defaultValues: getDefaultValues(user?.role === 'mop' ? user.id : null),
+    defaultValues: emptyDealForm(user?.role === 'mop' ? user.id : null),
     mode: 'onTouched',
   });
 

@@ -5,13 +5,21 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { counterpartyName, useCounterpartySearch } from '@shared/api/counterparty';
 import { useDebouncedValue } from '@shared/lib/useDebouncedValue';
 import type { Counterparty, CounterpartyContact } from '@shared/types/deal';
-import { CounterpartyModal } from '../../../../shared/components/CounterpartyModal';
-import type { DealFormValues } from '../../schema';
+import { CounterpartyModal } from '../CounterpartyModal';
+import { counterpartyToItem, type DealFormValues } from '../../dealForm';
 import { CounterpartyCard } from './CounterpartyCard';
-import s from './StepClient.module.less';
+import s from './ClientEditor.module.less';
 
-/** Шаг 2: контрагенты сделки и контакты по сделке */
-export function StepClient() {
+interface Props {
+  /** показывать и проверять реквизиты контрагентов (страница сделки) */
+  editRequisites?: boolean;
+}
+
+/**
+ * Контрагенты сделки и контакты по сделке — поля формы counterparties / contacts / primary_*.
+ * Используется в мастере создания и на странице сделки.
+ */
+export function ClientEditor({ editRequisites = false }: Props) {
   const { control, setValue, getValues, formState } = useFormContext<DealFormValues>();
   const counterparties = useWatch({ control, name: 'counterparties' });
   const opts = { shouldValidate: true, shouldDirty: true } as const;
@@ -23,17 +31,11 @@ export function StepClient() {
 
   const addCounterparty = (c: Counterparty) => {
     if (added.has(c.id)) return;
-    setValue(
-      'counterparties',
-      [
-        ...getValues('counterparties'),
-        { id: c.id, name: counterpartyName(c), type: c.type, inn: c.inn },
-      ],
-      opts,
-    );
+    setValue('counterparties', [...getValues('counterparties'), counterpartyToItem(c)], opts);
     // первый добавленный — основной
-    if (getValues('primary_counterparty_id') === null)
+    if (getValues('primary_counterparty_id') === null) {
       setValue('primary_counterparty_id', c.id, opts);
+    }
   };
 
   const removeCounterparty = (id: number) => {
@@ -59,8 +61,9 @@ export function StepClient() {
 
     const primary = getValues('primary_contact_id');
     if (checked && primary === null) setValue('primary_contact_id', contact.id, opts);
-    if (!checked && primary === contact.id)
+    if (!checked && primary === contact.id) {
       setValue('primary_contact_id', next[0]?.id ?? null, opts);
+    }
   };
 
   const createCounterparty = async () => {
@@ -98,13 +101,7 @@ export function StepClient() {
         <Button onClick={createCounterparty}>+ Новый контрагент</Button>
       </div>
 
-      {found.isError && (
-        <Alert
-          type="warning"
-          showIcon
-          title="Поиск контрагентов недоступен — проверьте группу Counterparty в .env"
-        />
-      )}
+      {found.isError && <Alert type="warning" showIcon title="Поиск контрагентов недоступен" />}
 
       {listError && <Alert type="error" showIcon title={listError} />}
 
@@ -116,10 +113,11 @@ export function StepClient() {
         />
       ) : (
         <div className={s.cards}>
-          {counterparties.map((c) => (
+          {counterparties.map((c, index) => (
             <CounterpartyCard
               key={c.id}
-              counterparty={c}
+              index={index}
+              editRequisites={editRequisites}
               onRemove={() => removeCounterparty(c.id)}
               onToggleContact={toggleContact}
             />

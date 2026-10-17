@@ -6,11 +6,12 @@
 
 .picker {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
 }
 
 .search {
-  flex: 1;
+  flex: 1 1 240px;
   min-width: 0;
 }
 
@@ -47,6 +48,7 @@
 
 .cardHead {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 12px;
   padding: 10px 12px;
@@ -54,7 +56,7 @@
 }
 
 .cardTitle {
-  flex: 1;
+  flex: 1 1 200px;
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -95,12 +97,13 @@
 .contactList {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(360px, 100%), 1fr));
   gap: 8px;
 }
 
 .contact {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
@@ -120,11 +123,75 @@
 }
 
 .contactMeta {
+  // inline-block — чтобы на узком экране телефон и примечание переносились целиком
+  display: inline-block;
   margin-left: 8px;
   color: var(--ink-2);
   font-size: 0.86rem;
+  white-space: nowrap;
 }
 
 .muted {
   color: var(--ink-3);
+}
+
+.contactActions {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  flex: none;
+}
+
+/* ── реквизиты (аккордеон в карточке) ── */
+
+.requisites {
+  border-bottom: 1px solid var(--line);
+}
+
+.requisitesError .accHead b {
+  color: var(--danger);
+}
+
+.accHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
+  border: 0;
+  background: none;
+  text-align: left;
+
+  b {
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+
+  &:hover b {
+    color: var(--accent);
+  }
+}
+
+.chev {
+  margin-left: auto;
+  color: var(--ink-3);
+  transition: transform 0.18s;
+}
+
+.chevOpen {
+  transform: rotate(180deg);
+}
+
+.accBody {
+  padding: 4px 12px 2px;
+  background: var(--surface);
+}
+
+.hint {
+  margin: -6px 0 12px;
+  color: var(--ink-3);
+  font-size: 0.86rem;
 }

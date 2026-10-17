@@ -1,0 +1,58 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0 14px;
+}
+
+.item {
+  margin-bottom: 14px;
+}
+
+.full {
+  width: 100%;
+}
+
+/* ── вариант «в рамках» (блок квалификации на странице сделки, как .qitem в прототипе) ── */
+
+.boxed {
+  gap: 8px 12px;
+
+  .item {
+    margin: 0;
+    padding: 7px 10px 9px;
+    border: 1px solid var(--chip-bg);
+    border-radius: 9px;
+    background: var(--bg-soft);
+
+    :global(.ant-form-item-label > label) {
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--ink-2);
+    }
+
+    :global(.ant-form-item-label) {
+      padding-bottom: 4px;
+    }
+  }
+
+  .filled {
+    border-color: color-mix(in srgb, var(--ok) 35%, transparent);
+    background: color-mix(in srgb, var(--ok-soft) 50%, var(--surface));
+
+    :global(.ant-form-item-label > label)::after {
+      content: '✓';
+      margin-left: 6px;
+      color: var(--ok);
+      font-weight: 800;
+    }
+  }
+
+  .accent {
+    border-color: var(--accent-line);
+    background: var(--accent-soft);
+
+    :global(.ant-form-item-label > label) {
+      color: var(--accent);
+    }
+  }
+}

@@ -20,6 +20,7 @@
 | Deal | deal.patch.xs | PATCH /deal/{number} |
 | Deal | deal_qualification.patch.xs | PATCH /deal/{number}/qualification |
 | Deal | deal_counterparty.post.xs | POST /deal/{number}/counterparty |
+| Deal | deal_counterparty.patch.xs | PATCH /deal/{number}/counterparty/{counterparty_id} |
 | Deal | deal_counterparty.delete.xs | DELETE /deal/{number}/counterparty/{counterparty_id} |
 | Deal | deal_contact.post.xs | POST /deal/{number}/contact |
 | Deal | deal_contact.patch.xs | PATCH /deal/{number}/contact/{contact_id} |

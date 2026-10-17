@@ -173,11 +173,12 @@ user (role) ─< deal (mop_id, mos_id, created_by)
 | GET | /deal | Реестр сделок: фильтры status, mop_id, поиск; пагинация |
 | GET | /deal/{number} | Сделка вместе с qualification, counterparties[], contacts[] (контакты сделки с флагом is_primary), mop, mos |
 | POST | /deal | Создание: deal, qualification, counterparties, contacts; генерирует number |
-| PATCH | /deal/{number} | Изменение полей сделки и статуса |
+| PATCH | /deal/{number} | Сохранение основных полей (name, client_type, mop_id, mos_id; null очищает), status — по желанию |
 | PATCH | /deal/{number}/qualification | Сохранение квалификации |
 | GET | /counterparty?search= | Поиск контрагентов по названию или ИНН |
 | POST / PATCH | /counterparty | Создание или изменение контрагента |
 | POST / PATCH / DELETE | /contact | Контакты контрагентов (группа Contact) |
 | POST / DELETE | /deal/{number}/counterparty | Привязка или отвязка контрагента (вместе с его контактами) |
+| PATCH | /deal/{number}/counterparty/{counterparty_id} | Сделать контрагента основным |
 | GET | /contact?counterparty_id= | Контакты контрагента для выбора в сделку |
 | POST / PATCH / DELETE | /deal/{number}/contact | Привязка или отвязка контакта, смена основного |

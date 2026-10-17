@@ -17,10 +17,12 @@
 
 .title {
   display: flex;
+  min-width: 0;
+  max-width: 100%;
   align-items: center;
   gap: 6px;
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 700;
   white-space: nowrap;
   color: var(--accent);
@@ -30,14 +32,15 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 0.76rem;
+  font-size: 0.86rem;
   font-weight: 600;
   color: var(--ink-3);
   white-space: nowrap;
+  flex-wrap: wrap;
 
   b {
     color: var(--ink);
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 700;
   }
 
@@ -63,8 +66,12 @@
   display: flex;
   align-items: center;
   gap: 2px;
-  flex: none;
+  // может сжиматься — тогда прокручивается по горизонтали, а не вылезает за экран
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
   overflow-x: auto;
+  scrollbar-width: thin;
 }
 
 .tab {
@@ -72,7 +79,7 @@
   background: none;
   color: var(--ink-2);
   font-weight: 600;
-  font-size: 0.84rem;
+  font-size: 0.95rem;
   padding: 7px 10px;
   border-radius: 8px;
   white-space: nowrap;
@@ -108,7 +115,7 @@
   padding: 6px 14px;
   border-radius: 8px;
   font-weight: 700;
-  font-size: 0.82rem;
+  font-size: 0.92rem;
   color: var(--ink-2);
 
   &[aria-selected='true'] {
@@ -128,7 +135,7 @@
   border-radius: 999px;
   background: var(--warn-soft);
   color: var(--warn);
-  font-size: 0.78rem;
+  font-size: 0.86rem;
   font-weight: 700;
   white-space: nowrap;
   animation: notePulse 1.8s ease-in-out infinite;
@@ -154,12 +161,44 @@
 .side {
   display: flex;
   align-items: center;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  min-width: 0;
+  max-width: 100%;
   margin-left: auto;
 }
 
 .actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
-  flex: none;
+  min-width: 0;
+}
+
+/* узкий экран: вкладки — отдельной прокручиваемой строкой, действия — под ними */
+@media (max-width: @bp-md) {
+  .top {
+    gap: 10px;
+    padding: 8px 12px;
+  }
+
+  .tabs {
+    flex: 1 1 100%;
+    order: 3;
+  }
+
+  .side {
+    flex: 1 1 100%;
+    order: 4;
+    margin-left: 0;
+    justify-content: space-between;
+  }
+}
+
+/* вкладки разделов, которые ещё не готовы */
+.tab:disabled,
+.vsBtn:disabled {
+  color: var(--ink-3);
+  background: none;
+  cursor: not-allowed;
 }

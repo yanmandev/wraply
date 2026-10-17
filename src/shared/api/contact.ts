@@ -19,6 +19,9 @@ export const contactApi = {
 
   create: (payload: ContactPayload) =>
     api.contact.post('contact', { json: payload }).json<CounterpartyContact>(),
+
+  update: (id: number, payload: Omit<ContactPayload, 'counterparty_id'>) =>
+    api.contact.patch(`contact/${id}`, { json: payload }).json<CounterpartyContact>(),
 };
 
 export const useCounterpartyContacts = (counterpartyId: number) =>

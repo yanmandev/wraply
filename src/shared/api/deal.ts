@@ -33,6 +33,16 @@ export interface CreateDealPayload {
   qualification: QualificationPayload;
 }
 
+export interface UpdateDealPayload {
+  name: string;
+  client_type: ClientType | null;
+  mop_id: number | null;
+  mos_id: number | null;
+  status?: DealStatus;
+}
+
+const dealPath = (number: string) => `deal/${encodeURIComponent(number)}`;
+
 export const dealKeys = {
   all: ['deal'] as const,
   list: (params: DealListParams) => ['deal', 'list', params] as const,
@@ -49,9 +59,47 @@ export const dealApi = {
   list: (params: DealListParams) =>
     api.deal.get('deal', { searchParams: toSearchParams(params) }).json<Paged<DealListItem>>(),
 
-  get: (number: string) => api.deal.get(`deal/${encodeURIComponent(number)}`).json<DealCard>(),
+  get: (number: string) => api.deal.get(dealPath(number)).json<DealCard>(),
 
   create: (payload: CreateDealPayload) => api.deal.post('deal', { json: payload }).json<DealCard>(),
+
+  /** Основные поля: null очищает значение; status не передан — не меняется */
+  update: (number: string, payload: UpdateDealPayload) =>
+    api.deal.patch(dealPath(number), { json: payload }).json<DealCard>(),
+
+  updateQualification: (number: string, qualification: QualificationPayload) =>
+    api.deal
+      .patch(`${dealPath(number)}/qualification`, { json: { qualification } })
+      .json<DealQualification>(),
+
+  /* связи с контрагентами */
+  linkCounterparty: (number: string, counterpartyId: number, isPrimary: boolean) =>
+    api.deal
+      .post(`${dealPath(number)}/counterparty`, {
+        json: { counterparty_id: counterpartyId, is_primary: isPrimary },
+      })
+      .json<DealCard>(),
+  setPrimaryCounterparty: (number: string, counterpartyId: number) =>
+    api.deal
+      .patch(`${dealPath(number)}/counterparty/${counterpartyId}`, { json: { is_primary: true } })
+      .json<DealCard>(),
+  /** Вместе с контрагентом отвязываются и его контакты (на стороне Xano) */
+  unlinkCounterparty: (number: string, counterpartyId: number) =>
+    api.deal.delete(`${dealPath(number)}/counterparty/${counterpartyId}`).json<DealCard>(),
+
+  /* связи с контактами */
+  linkContact: (number: string, contactId: number, isPrimary: boolean) =>
+    api.deal
+      .post(`${dealPath(number)}/contact`, {
+        json: { contact_id: contactId, is_primary: isPrimary },
+      })
+      .json<DealCard>(),
+  setPrimaryContact: (number: string, contactId: number) =>
+    api.deal
+      .patch(`${dealPath(number)}/contact/${contactId}`, { json: { is_primary: true } })
+      .json<DealCard>(),
+  unlinkContact: (number: string, contactId: number) =>
+    api.deal.delete(`${dealPath(number)}/contact/${contactId}`).json<DealCard>(),
 };
 
 export const useDeals = (params: DealListParams) =>

@@ -1,0 +1,24 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 12px;
+
+  @media (max-width: 520px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.full {
+  width: 100%;
+}
+
+.statusOption {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+
+  small {
+    color: var(--ink-3);
+    font-size: 0.82rem;
+  }
+}

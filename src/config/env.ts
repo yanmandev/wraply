@@ -12,6 +12,7 @@ export const env = {
     deal: e.VITE_API_GROUP_DEAL ?? '',
     counterparty: e.VITE_API_GROUP_COUNTERPARTY ?? '',
     contact: e.VITE_API_GROUP_CONTACT ?? '',
+    user: e.VITE_API_GROUP_USER ?? '',
   },
   isProdBuild: e.PROD,
 } as const;

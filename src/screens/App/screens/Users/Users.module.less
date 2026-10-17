@@ -1,0 +1,96 @@
+.headRight {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.roleSelect {
+  width: 170px;
+}
+
+.search {
+  width: 260px;
+
+  @media (max-width: @bp-md) {
+    width: 180px;
+  }
+}
+
+.table {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: var(--surface);
+
+  :global(.ant-table-thead > tr > th) {
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    background: var(--bg-soft);
+  }
+
+  :global(.ant-table-tbody > tr) {
+    cursor: pointer;
+  }
+
+  :global(.ant-table-pagination) {
+    padding: 0 16px;
+  }
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.avatar {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.userText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+
+  b {
+    .ellipsis();
+  }
+
+  span {
+    .ellipsis();
+    color: var(--ink-2);
+    font-size: 0.88rem;
+  }
+}
+
+.me {
+  color: var(--ink-3);
+  font-weight: 500;
+}
+
+.muted {
+  color: var(--ink-3);
+}
+
+/* на узком экране переключатель статусов прокручивается, а не вылезает за край */
+.statusFilter {
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}

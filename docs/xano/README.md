@@ -4,16 +4,22 @@
 
 ## Порядок
 
-1. **Таблицы** (`tables/`). В существующую таблицу `user` добавьте поле из `user.role.xs`. Остальные таблицы создавайте в таком порядке: `deal` → `deal_qualification` → `counterparty` → `deal_counterparty` → `counterparty_contact` → `deal_contact`. Порядок важен, потому что ссылки на таблицы требуют, чтобы целевая таблица уже существовала.
-2. **Функции** (`functions/`): `deal_by_number`, `user_brief`, `counterparty_validate`, затем `deal_card`, потому что она вызывает `user_brief`.
-3. **Эндпоинты** (`api/`) раскладываются по группам Deal, Counterparty, Contact и Authentication (см. таблицу ниже и `_api_group.xs`). Группу Contact нужно создать.
-4. **`auth/me`**. Поле `role` придёт в ответе само, если эндпоинт возвращает запись `user` целиком. Если ответ собран вручную, добавьте в него `role`.
+1. **Таблицы** (`tables/`). В существующую таблицу `user` добавьте поля из `user.fields.xs` (role, first_name, last_name, status). Остальные таблицы создавайте в таком порядке: `deal` → `deal_qualification` → `counterparty` → `deal_counterparty` → `counterparty_contact` → `deal_contact`. Порядок важен, потому что ссылки на таблицы требуют, чтобы целевая таблица уже существовала.
+2. **Функции** (`functions/`): `deal_by_number`, `user_brief`, `counterparty_validate`, затем `deal_card`, потому что она вызывает `user_brief`. Для пользователей: `user_check_status`, `user_public`, `require_admin`.
+3. **Эндпоинты** (`api/`) раскладываются по группам Deal, Counterparty, Contact, User и Authentication (см. таблицу ниже и `_api_group.xs`). Группу User нужно создать.
+4. **`auth/login` и `auth/me`** замените версиями из `auth.login.xs` и `auth.me.xs`: они не пускают неактивных и архивных пользователей.
 
 ## Эндпоинты
 
 | Группа | Файл | Метод и путь |
 |---|---|---|
-| Authentication | user.list.xs | GET /user?role= |
+| Authentication | auth.login.xs | POST /auth/login (замена: проверка статуса) |
+| Authentication | auth.me.xs | GET /auth/me (замена: проверка статуса, без пароля в ответе) |
+| Authentication | auth.user.list.xs | GET /user?role= (только активные) |
+| User | user.list.xs | GET /user?search=&role=&status=&page= |
+| User | user.post.xs | POST /user |
+| User | user.patch.xs | PATCH /user/{user_id} |
+| User | user.delete.xs | DELETE /user/{user_id} |
 | Deal | deal.list.xs | GET /deal?search=&status=&mop_id=&page=&per_page= |
 | Deal | deal.get.xs | GET /deal/{number} |
 | Deal | deal.post.xs | POST /deal |
@@ -33,7 +39,7 @@
 | Contact | contact.patch.xs | PATCH /contact/{contact_id} |
 | Contact | contact.delete.xs | DELETE /contact/{contact_id} |
 
-У каждой группы свой base URL (`https://<host>/api:<canonical>`). Canonical групп нужно прописать во фронте, в `.env.loc` / `.env.dev`: `VITE_API_GROUP_DEAL`, `VITE_API_GROUP_COUNTERPARTY`, `VITE_API_GROUP_CONTACT`.
+У каждой группы свой base URL (`https://<host>/api:<canonical>`). Canonical групп нужно прописать во фронте, в `.env.loc` / `.env.dev`: `VITE_API_GROUP_DEAL`, `VITE_API_GROUP_COUNTERPARTY`, `VITE_API_GROUP_CONTACT`, `VITE_API_GROUP_USER`.
 ## Что проверить при импорте
 
 Код написан по справочнику XanoScript (пакет `@xano/developer-mcp`), но в Xano ещё не запускался. Если редактор подсветит ошибку, она скорее всего в одном из этих мест:

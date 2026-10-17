@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router';
 import type { ComponentType } from 'react';
 import { RequireAuth } from '@shared/components/RequireAuth';
+import { RequireRole } from '@shared/components/RequireRole';
 import App from '@/screens/App';
 
 // Экраны грузятся лениво — отдельный чанк на каждый
@@ -33,6 +34,11 @@ export const router = createBrowserRouter([
           { path: 'disk', lazy: screen(() => import('@app/screens/Disk')) },
           { path: 'kb', lazy: screen(() => import('@app/screens/Kb')) },
           { path: 'profile', lazy: screen(() => import('@app/screens/Profile')) },
+          {
+            path: 'users',
+            element: <RequireRole role="admin" />,
+            children: [{ index: true, lazy: screen(() => import('@app/screens/Users')) }],
+          },
           { path: '*', lazy: screen(() => import('@app/screens/NotFound')) },
         ],
       },

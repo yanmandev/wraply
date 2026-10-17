@@ -10,6 +10,14 @@ export function useLogin() {
     mutationFn: async (payload: LoginPayload) => {
       const { authToken } = await authApi.login(payload);
       const user = await authApi.me(authToken);
+      // Xano уже не пускает неактивных; это подстраховка на случай старого auth/login
+      if (user.status && user.status !== 'active') {
+        throw new Error(
+          user.status === 'archived'
+            ? 'Учётная запись в архиве. Обратитесь к администратору.'
+            : 'Доступ временно ограничен. Обратитесь к администратору.',
+        );
+      }
       return { user, token: authToken };
     },
     onSuccess: ({ user, token }) => setSession(user, token),

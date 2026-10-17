@@ -8,6 +8,7 @@ interface ImportMetaEnv {
   readonly VITE_API_GROUP_DEAL?: string;
   readonly VITE_API_GROUP_COUNTERPARTY?: string;
   readonly VITE_API_GROUP_CONTACT?: string;
+  readonly VITE_API_GROUP_USER?: string;
 }
 
 interface ImportMeta {

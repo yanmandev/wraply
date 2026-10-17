@@ -1,14 +1,18 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import type { UserRole } from '@shared/constants/user';
+import type { UserRole, UserStatus } from '@shared/constants/user';
 
 /** Пользователь Xano (auth/me) */
 export interface User {
   id: number;
   email: string;
+  /** «Имя Фамилия» — заполняет Xano */
   name?: string;
-  /** может отсутствовать, пока поле не добавлено в Xano */
+  first_name?: string | null;
+  last_name?: string | null;
+  /** role/status могут отсутствовать, пока поля не добавлены в Xano */
   role?: UserRole;
+  status?: UserStatus;
   created_at?: number;
 }
 
@@ -16,6 +20,8 @@ interface UserState {
   user: User | null;
   token: string | null;
   setSession: (user: User, token: string) => void;
+  /** обновить данные пользователя (роль, имя) после auth/me, не трогая токен */
+  setUser: (user: User) => void;
   logout: () => void;
 }
 
@@ -25,6 +31,7 @@ export const useUserStore = create<UserState>()(
       user: null,
       token: null,
       setSession: (user, token) => set({ user, token }),
+      setUser: (user) => set({ user }),
       logout: () => set({ user: null, token: null }),
     }),
     {
@@ -38,3 +45,4 @@ export const useUserStore = create<UserState>()(
 );
 
 export const selectIsAuthed = (s: UserState) => Boolean(s.token && s.user);
+export const selectIsAdmin = (s: UserState) => s.user?.role === 'admin';

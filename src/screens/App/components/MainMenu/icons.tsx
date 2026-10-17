@@ -91,3 +91,11 @@ export const CollapseIcon = (p: IconProps) => (
     <path d="M15 6l-6 6 6 6" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
+
+export const UsersIcon = (p: IconProps) => (
+  <svg {...base} {...p}>
+    <circle cx="9" cy="8" r="3.2" />
+    <path d="M3 19.5c.9-3 3.2-4.7 6-4.7s5.1 1.7 6 4.7" strokeLinecap="round" />
+    <path d="M15.5 4.9a3.2 3.2 0 0 1 0 6.2M17.5 14.9c1.7.6 2.9 2.2 3.5 4.6" strokeLinecap="round" />
+  </svg>
+);

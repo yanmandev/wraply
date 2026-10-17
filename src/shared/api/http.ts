@@ -37,6 +37,7 @@ export const api = {
   deal: groupClient('deal'),
   counterparty: groupClient('counterparty'),
   contact: groupClient('contact'),
+  user: groupClient('user'),
 } as const satisfies Record<ApiGroup, unknown>;
 
 /** Человекочитаемый текст ошибки (Xano возвращает { message }) */

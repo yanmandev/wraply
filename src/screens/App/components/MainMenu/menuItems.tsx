@@ -1,5 +1,14 @@
 import type { ComponentType, SVGProps } from 'react';
-import { ChatsIcon, DealsIcon, DiskIcon, KbIcon, LeadsIcon, ProfileIcon, TasksIcon } from './icons';
+import {
+  ChatsIcon,
+  DealsIcon,
+  DiskIcon,
+  KbIcon,
+  LeadsIcon,
+  ProfileIcon,
+  TasksIcon,
+  UsersIcon,
+} from './icons';
 
 export interface MenuLink {
   key: string;
@@ -23,4 +32,12 @@ export const profileLink: MenuLink = {
   label: 'Настройки профиля',
   path: '/profile',
   icon: ProfileIcon,
+};
+
+/** Управление пользователями — только для администратора */
+export const usersLink: MenuLink = {
+  key: 'users',
+  label: 'Пользователи',
+  path: '/users',
+  icon: UsersIcon,
 };

@@ -24,6 +24,7 @@ import { QualificationCard } from './components/QualificationCard';
 import { ClientCard } from './components/ClientCard';
 import { DealFunnel } from './components/DealFunnel';
 import { HelpCard } from './components/HelpCard';
+import { DocumentsCard } from './components/DocumentsCard';
 import { saveDeal } from './saveDeal';
 import { useLeaveGuard } from './useLeaveGuard';
 import s from './Deal.module.less';
@@ -203,6 +204,7 @@ function DealEditor({ number, card }: { number: string; card: DealCard }) {
           />
           <ClientCard />
         </Form>
+        <DocumentsCard deal={card} />
         <HelpCard status={card.status} />
       </PageBody>
     </FormProvider>

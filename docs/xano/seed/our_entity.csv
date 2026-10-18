@@ -1,0 +1,4 @@
+short_name,full_name,inn,kpp,ogrn,address,bank_name,bik,account,corr_account,vat_rate,is_active,sort
+ИП Куранов,,,,,,,,,,,true,1
+ООО Марк Групп,,,,,,,,,,20,true,2
+ООО Супер Винил,,,,,,,,,,,true,3

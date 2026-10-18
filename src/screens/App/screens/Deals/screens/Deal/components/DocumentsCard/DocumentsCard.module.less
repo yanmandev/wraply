@@ -1,0 +1,102 @@
+/* ── таблица документов (как .tbl в прототипе) ── */
+
+.table {
+  :global(.ant-table) {
+    background: transparent;
+  }
+
+  :global(.ant-table-thead > tr > th) {
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    background: var(--surface);
+    white-space: nowrap;
+  }
+}
+
+.title {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-weight: 600;
+  text-align: left;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.sum {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.comment {
+  color: var(--ink-2);
+  font-size: 0.9rem;
+}
+
+.muted {
+  color: var(--ink-3);
+}
+
+.actions {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.foot {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 16px;
+  border-top: 1px solid var(--line);
+}
+
+.hint {
+  color: var(--ink-3);
+  font-size: 0.86rem;
+}
+
+/* ── окно документа ── */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 12px;
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wide {
+  grid-column: 1 / -1;
+}
+
+.full {
+  width: 100%;
+}
+
+.fileItem {
+  margin-bottom: 12px;
+}
+
+.fileLink {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 24px;
+  border-radius: 6px;
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+
+  &:hover {
+    background: var(--accent-soft);
+  }
+}

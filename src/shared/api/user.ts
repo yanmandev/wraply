@@ -19,4 +19,6 @@ export const useUsers = (role?: UserRole) =>
     queryKey: userKeys.list(role),
     queryFn: () => userApi.list(role),
     staleTime: 5 * 60_000,
+    // неожиданный ответ (не массив) не должен ронять страницу со списками МОП/МОС
+    select: (data) => (Array.isArray(data) ? data : []),
   });

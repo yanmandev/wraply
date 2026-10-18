@@ -4,8 +4,8 @@
 
 ## Порядок
 
-1. **Таблицы** (`tables/`). В существующую таблицу `user` добавьте поля из `user.fields.xs` (role, first_name, last_name, status). Остальные таблицы создавайте в таком порядке: `deal` → `deal_qualification` → `counterparty` → `deal_counterparty` → `counterparty_contact` → `deal_contact`. Порядок важен, потому что ссылки на таблицы требуют, чтобы целевая таблица уже существовала.
-2. **Функции** (`functions/`): `deal_by_number`, `user_brief`, `counterparty_validate`, затем `deal_card`, потому что она вызывает `user_brief`. Для пользователей: `user_check_status`, `user_public`, `require_admin`.
+1. **Таблицы** (`tables/`). В существующую таблицу `user` добавьте поля из `user.fields.xs` (role, first_name, last_name, status). Остальные таблицы создавайте в таком порядке: `deal` → `deal_qualification` → `counterparty` → `deal_counterparty` → `counterparty_contact` → `deal_contact` → `our_entity` → `deal_document`. Порядок важен, потому что ссылки на таблицы требуют, чтобы целевая таблица уже существовала.
+2. **Функции** (`functions/`): `deal_by_number`, `user_brief`, `counterparty_validate`, затем `deal_card`, потому что она вызывает `user_brief`. Для пользователей: `user_check_status`, `user_public`, `require_admin`. Для документов: `document_normalize`, `document_link_check`, `deal_document_get`.
 3. **Эндпоинты** (`api/`) раскладываются по группам Deal, Counterparty, Contact, User и Authentication (см. таблицу ниже и `_api_group.xs`). Группу User нужно создать.
 4. **`auth/login` и `auth/me`** замените версиями из `auth.login.xs` и `auth.me.xs`: они не пускают неактивных и архивных пользователей.
 
@@ -25,6 +25,11 @@
 | Deal | deal.get.xs | GET /deal/{number} |
 | Deal | deal.post.xs | POST /deal |
 | Deal | deal.patch.xs | PATCH /deal/{number} |
+| Deal | our_entity.list.xs | GET /our_entity |
+| Deal | deal_document.list.xs | GET /deal/{number}/document |
+| Deal | deal_document.post.xs | POST /deal/{number}/document (JSON, файл — ссылкой file_url) |
+| Deal | deal_document.patch.xs | PATCH /deal/{number}/document/{document_id} (JSON) |
+| Deal | deal_document.delete.xs | DELETE /deal/{number}/document/{document_id} |
 | Deal | deal_qualification.patch.xs | PATCH /deal/{number}/qualification |
 | Deal | deal_counterparty.post.xs | POST /deal/{number}/counterparty |
 | Deal | deal_counterparty.patch.xs | PATCH /deal/{number}/counterparty/{counterparty_id} |
